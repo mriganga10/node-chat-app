@@ -19,17 +19,21 @@ io.on('connection', (socket) => {
   			callback('you have an invalid name or room');
   		}
   		else{
-  			callback();
+        console.log('socket requested to join');
+  			socket.join(params.room);
+  			socket.emit('newMessage', generateMessage('Admin','welcome to the chat app')); // sends to only the socket,emit methods has other arguments which gets passed to the other socket.on
+  			socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin',`${params.name}: joined`)); // sends to everybody except the socket
+  		//	callback();
   		}
   });
 
-  socket.emit('newMessage', generateMessage('Admin','welcome to the chat app')); // sends to only the socket,emit methods has other arguments which gets passed to the other socket.on
+  // socket.emit('newMessage', generateMessage('Admin','welcome to the chat app')); // sends to only the socket,emit methods has other arguments which gets passed to the other socket.on
 
-  socket.broadcast.emit('newMessage', generateMessage('Admin','new user joined')); // sends to everybody except the socket
+  // socket.broadcast.emit('newMessage', generateMessage('Admin','new user joined')); // sends to everybody except the socket
   socket.on('createMessage', (message,callback) => { // event listener
 	    console.log('createMessage', message);
 	    io.emit('newMessage', generateMessage(message.from,message.text)); //ssends to everybody
-	    callback(''); //this function doesn't get executed here it get's executed in index.js
+	   // callback(''); //this function doesn't get executed here it get's executed in index.js
 
 	});
 
