@@ -30,8 +30,9 @@ socket.on('connect', function () {
 
     }
   } );
-  // socket.emit('createMessage', {
-  // 	from:'jen@example.com',
+  //socket.emit('createMessage', {
+  //  
+  // sfrom:'jen@example.com',
   //   text: 'Hey. This is Andrew.'
   // });
 });
